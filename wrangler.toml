@@ -1,0 +1,6 @@
+name = "wyatt-rss"
+type = "webpack"
+account_id = "c3b68a2fab95f8d5cde30810c7aeb3fa"
+workers_dev = true
+route = ""
+zone_id = "2c12b6e1f1bbafe50e94145e0201254c"

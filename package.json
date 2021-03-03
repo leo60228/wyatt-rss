@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "wyatt-rss",
+  "version": "1.0.0",
+  "description": "A template for kick starting a Cloudflare Workers project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "leo60228 <leo@60228.dev>",
+  "license": "MIT",
+  "dependencies": {
+    "stream-json": "^1.7.1",
+    "xmlbuilder": "^15.1.1"
+  }
+}

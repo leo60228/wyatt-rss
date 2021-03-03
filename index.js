@@ -12,7 +12,7 @@ addEventListener('fetch', event => {
 
 const wyatt = 'e16c3f28-eecd-4571-be1a-606bbac36b2b';
 const hitType = 10;
-const homerType = 11;
+const homerType = 9;
 
 async function handleRequest(event) {
     try {

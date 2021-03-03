@@ -53,9 +53,17 @@ async function handleRequest(event) {
     const jsonStream = feedStream.pipe(StreamArray.withParser());
 
     const { readable, writable } = new TransformStream();
+
+    let ct = 'text/xml';
+
+    const userAgent = request.headers.get('User-Agent');
+    if (userAgent && userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+        ct = 'application/xhtml+xml';
+    }
+
     const resp = new Response(readable, {
         headers: {
-            'Content-Type': 'text/xml'
+            'Content-Type': ct
         }
     });
 

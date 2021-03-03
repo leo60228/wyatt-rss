@@ -57,6 +57,7 @@ async function handleRequest(request) {
             version: '1.0',
             encoding: 'UTF-8'
         })
+        .ins('xml-stylesheet', 'type="text/xsl" href="rss.xsl" media="screen"')
         .ele('rss').att('version', '2.0').att('xmlns:atom', 'http://www.w3.org/2005/Atom')
         .ele('channel')
         .ele('title').text('Wyatt Glover').up()

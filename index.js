@@ -78,7 +78,7 @@ async function handleRequest(event) {
             encoding: 'UTF-8'
         })
         .ins('xml-stylesheet', 'type="text/xsl" href="rss.xsl" media="screen"')
-        .ele('rss').att('version', '2.0').att('xmlns:atom', 'http://www.w3.org/2005/Atom')
+        .ele('rss').att('version', '2.0').att('xmlns:atom', 'http://www.w3.org/2005/Atom').att('xmlns:blaseball', 'https://xmlns.l3.pm/blaseball/v1')
         .ele('channel')
         .ele('title').text('Wyatt Glover Hits').up()
         .ele('link').text('https://www.blaseball.com').up()
@@ -102,6 +102,10 @@ async function handleRequest(event) {
 
                 channel
                     .ele('item')
+                    .ele('title').text(`${hit.type === hitType ? 'Hit' : 'Home Run'}, Day ${hit.day + 1}`).up()
+                    .ele('blaseball:type').text(hit.type.toString()).up()
+                    .ele('blaseball:season').text(hit.season.toString()).up()
+                    .ele('blaseball:day').text(hit.day.toString()).up()
                     .ele('description').text(hit.description).up()
                     .ele('pubDate').text(date.toUTCString()).up()
                     .ele('guid').att('isPermaLink', 'false').text(hit.id).up()

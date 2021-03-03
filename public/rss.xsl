@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:blaseball="https://xmlns.l3.pm/blaseball/v1">
     <xsl:template name="format-from-rfc-to-iso">
         <xsl:param name="rfc-date" />
         <xsl:param name="day-with-zero" select="format-number(substring(substring($rfc-date, 6, 11), 1, 2), '00')" />
@@ -36,6 +36,12 @@
                 </title>
 
                 <script type="module" src="https://unpkg.com/@github/time-elements@3.1.1/dist/time-elements.js"></script>
+
+                <style>
+                    .homerun {
+                        font-weight: bold;
+                    }
+                </style>
             </head>
             <body>
                 <h1>
@@ -49,6 +55,16 @@
                 <ul>
                     <xsl:for-each select="./item">
                         <li>
+                            <xsl:attribute name="class">
+                                <xsl:choose>
+                                    <xsl:when test="./blaseball:type = 9">
+                                        homerun
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        hit
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:attribute>
                             <local-time month="long" day="numeric" year="numeric" hour="numeric" minute="2-digit">
                                 <xsl:attribute name="datetime">
                                     <xsl:call-template name="format-from-rfc-to-iso">
@@ -56,7 +72,10 @@
                                     </xsl:call-template>
                                 </xsl:attribute>
                                 <xsl:value-of select="pubDate" />
-                            </local-time>: <xsl:value-of select="description" />
+                            </local-time>
+                            (Season <xsl:value-of select="number(./blaseball:season) + 1" />,
+                                Day <xsl:value-of select="number(./blaseball:day) + 1" />):
+                            <xsl:value-of select="description" />
                         </li>
                     </xsl:for-each>
                 </ul>

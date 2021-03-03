@@ -36,22 +36,8 @@
                 </title>
 
                 <script type="module" src="https://unpkg.com/@github/time-elements@3.1.1/dist/time-elements.js"></script>
-
-                <style>
-                    body {
-                        display: none;
-                    }
-                </style>
             </head>
             <body>
-                <noscript>
-                    <style>
-                        body {
-                            display: block !important;
-                        }
-                    </style>
-                </noscript>
-
                 <h1>
                     <xsl:value-of select="title" />
                 </h1>

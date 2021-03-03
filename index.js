@@ -1,9 +1,10 @@
 import xmlbuilder from 'xmlbuilder';
 import { Readable } from 'stream';
 import StreamArray from 'stream-json/streamers/StreamArray';
+import { getAssetFromKV, NotFoundError } from "@cloudflare/kv-asset-handler";
 
 addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request).catch(ex => {
+    event.respondWith(handleRequest(event).catch(ex => {
         console.error(ex);
         throw ex;
     }));
@@ -13,7 +14,18 @@ const wyatt = 'e16c3f28-eecd-4571-be1a-606bbac36b2b';
 const hitType = 10;
 const homerType = 11;
 
-async function handleRequest(request) {
+async function handleRequest(event) {
+    try {
+        const asset = await getAssetFromKV(event);
+        return asset;
+    } catch (err) {
+        if (!(err instanceof NotFoundError)) {
+            throw err;
+        }
+    }
+
+    const request = event.request;
+
     const feedReq = await fetch(`https://www.blaseball.com/database/feed/player?id=${wyatt}`);
 
     const reader = feedReq.body.getReader();
@@ -60,9 +72,9 @@ async function handleRequest(request) {
         .ins('xml-stylesheet', 'type="text/xsl" href="rss.xsl" media="screen"')
         .ele('rss').att('version', '2.0').att('xmlns:atom', 'http://www.w3.org/2005/Atom')
         .ele('channel')
-        .ele('title').text('Wyatt Glover').up()
+        .ele('title').text('Wyatt Glover Hits').up()
         .ele('link').text('https://www.blaseball.com').up()
-        .ele('description').text('Wyatt Glover hits').up();
+        .ele('description').text('This is a feed that will automatically update whenever Wyatt Glover hits.').up();
 
     channel = channel
         .ele('atom:link')

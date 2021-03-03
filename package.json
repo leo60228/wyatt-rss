@@ -11,6 +11,7 @@
   "author": "leo60228 <leo@60228.dev>",
   "license": "MIT",
   "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.1.0",
     "stream-json": "^1.7.1",
     "xmlbuilder": "^15.1.1"
   }
